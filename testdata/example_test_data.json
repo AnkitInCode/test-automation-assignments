@@ -1,0 +1,20 @@
+[
+    {
+        "env": "QA",
+        "data": {
+            "login_page_logo_text": "Swag Labs",
+            "home_page_logo_text": "Swag Labs",
+            "test_create_user_api_body": {
+                "name": "morpheus",
+                "job": "leader"
+            }
+        }
+    },
+    {
+        "env": "STAGING",
+        "data": {
+            "login_page_logo_text": "Swag Labs",
+            "home_page_logo_text": "Swag Labs"
+        }
+    }
+]
