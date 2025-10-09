@@ -30,17 +30,6 @@ def global_setup(request, shared_data):
     yield context
 
 
-@pytest.mark.regression
-def test_get_user_api(global_setup, shared_data):
-    url = global_setup['apiurl'] + "objects/2/"
-
-    response = requests.get(url, headers=shared_data['headers'])
-    assert_that(response.status_code).is_equal_to(200)
-
-    response_data = response.json()
-    assert_that(response_data["id"]).is_equal_to("2")
-
-
 @pytest.mark.smoke
 def test_create_user_api(global_setup, shared_data):
     url = global_setup['apiurl'] + "objects"
@@ -83,6 +72,34 @@ def test_update_user_api(global_setup, shared_data):
     assert_that(response_data["name"]).is_equal_to(updated_name)
     assert_that(response_data["id"]).is_equal_to(id)  # using shared_data
 
+
+@pytest.mark.regression
+def test_get_user_api(global_setup, shared_data):
+    url = global_setup['apiurl'] + "objects/2/"
+
+    response = requests.get(url, headers=shared_data['headers'])
+    assert_that(response.status_code).is_equal_to(200)
+
+    response_data = response.json()
+    assert_that(response_data["id"]).is_equal_to("2")
+
+# #------------------ Negative Cases---
+
+@pytest.mark.regression
+def test_invalid_endpoint(global_setup):
+    url = global_setup['apiurl'] + "invalid_endpoint"
+    response = requests.get(url)
+    assert response.status_code == 404
+
+
+@pytest.mark.regression
+def test_update_non_existent_resource(global_setup, shared_data):
+    non_existent_id = 9999
+    url = f"{global_setup['apiurl']}objects/{non_existent_id}"
+    body = {"name": "Updated Laptop"}
+    
+    response = requests.patch(url, headers=shared_data['headers'], json=body)
+    assert response.status_code == 404
 
 
 @pytest.mark.skip(reason="no way of currently testing this")
