@@ -34,15 +34,29 @@ def global_setup(request, shared_data):
     yield context
 
 
-@pytest.mark.regression
-def test_get_user_api(global_setup, shared_data):
-    url = global_setup['apiurl'] + "objects/"
+# @pytest.mark.regression
+# def test_get_user_api(global_setup, shared_data):
+#     url = global_setup['apiurl'] + "objects/2/"
 
-    response = requests.get(url, headers=shared_data['headers'])
+#     response = requests.get(url, headers=shared_data['headers'])
+#     assert_that(response.status_code).is_equal_to(200)
+
+#     response_data = response.json()
+#     assert_that(response_data["id"]).is_equal_to("2")
+
+
+@pytest.mark.smoke
+def test_create_user_api(global_setup, shared_data):
+    url = global_setup['apiurl'] + "objects/"
+    
+    # get data form test_data file
+    body = shared_data['test_data']['test_create_user_api_body']
+
+    response = requests.post(url, headers=shared_data['headers'], json=body)
     assert_that(response.status_code).is_equal_to(200)
 
-    # response_data = response.json()
-    # assert_that(response_data["data"]["id"]).is_equal_to(2)
+    response_data = response.json()
+    shared_data['id'] = response_data["id"]
 
 
 @pytest.mark.skip(reason="no way of currently testing this")
