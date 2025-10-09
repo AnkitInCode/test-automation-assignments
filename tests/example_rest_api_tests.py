@@ -28,9 +28,8 @@ def global_setup(request, shared_data):
     yield context
 
 
-def test_create_user_api(global_setup, shared_data):
-    url = global_setup['apiurl']
-    body = shared_data['test_data']['test_create_user_api_body']
+def test_create_user_api_body(global_setup, shared_data):
+    url, body = global_setup['apiurl'], shared_data['test_data']['test_create_user_api_body']
 
     try:
         response = requests.post(url, headers=shared_data['headers'], json=body)
@@ -54,12 +53,11 @@ def test_create_user_api(global_setup, shared_data):
 
 
 @pytest.mark.smoke
-def test_update_user_api(global_setup, shared_data):
+def test_put_update_user_api_body(global_setup, shared_data):
     id = shared_data.get('id')
     assert id, "ID not found in shared_data"
 
-    body = shared_data['test_data']['test_update_user_api']
-    url = f"{global_setup['apiurl']}/{id}"
+    body, url = shared_data['test_data']['test_put_update_user_api_body'], f"{global_setup['apiurl']}/{id}"
 
     try:
         response = requests.put(url, headers=shared_data['headers'], json=body)
@@ -76,10 +74,31 @@ def test_update_user_api(global_setup, shared_data):
     assert_that(data["id"]).is_equal_to(id)
     assert_that(data["data"]["color"]).is_equal_to(body["data"]['color'])
 
+@pytest.mark.smoke
+def test_patch_update_user_api_body(global_setup, shared_data):
+    id = shared_data.get('id')
+    assert id, "ID not found in shared_data"
+
+    body, url = shared_data['test_data']['test_patch_update_user_api_body'], f"{global_setup['apiurl']}/{id}"
+
+    try:
+        response = requests.put(url, headers=shared_data['headers'], json=body)
+        response.raise_for_status()
+    except Exception as e:
+        pytest.fail(f"API request failed: {e}")
+
+    try:
+        data = response.json()
+    except ValueError:
+        pytest.fail(f"Invalid JSON response: {response.text}")
+
+    assert_that(response.status_code).is_equal_to(200)
+    assert_that(data["id"]).is_equal_to(id)
+    assert_that(data["name"]).is_equal_to(body["name"])
 
 @pytest.mark.regression
-def test_get_user_api(global_setup, shared_data):
-    body = shared_data['test_data']['test_get_user_api']
+def test_get_user_api_body(global_setup, shared_data):
+    body = shared_data['test_data']['test_get_user_api_body']
     id = body.get('id')
     url = f"{global_setup['apiurl']}/{id}"
 
@@ -114,8 +133,7 @@ def test_invalid_endpoint(global_setup):
 @pytest.mark.regression
 def test_update_non_existent_resource(global_setup, shared_data):
     non_existent_id = 9999
-    url = f"{global_setup['apiurl']}{non_existent_id}"
-    body = {"name": "Updated Laptop"}
+    url, body = f"{global_setup['apiurl']}{non_existent_id}", {"name": "Updated Laptop"}
     
     try:
         response = requests.patch(url, headers=shared_data['headers'], json=body)

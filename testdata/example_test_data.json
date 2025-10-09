@@ -11,7 +11,7 @@
                     "Hard disk size": "1 TB"
                 }
             },
-            "test_update_user_api": {
+            "test_put_update_user_api_body": {
                 "name": "Apple MacBook Pro 16",
                 "data": {
                     "year": 2019,
@@ -21,7 +21,10 @@
                     "color": "silver"
                 }
             },
-            "test_get_user_api": {
+            "test_patch_update_user_api_body": {
+                "name": "Apple MacBook Pro 16 (Updated Name)"
+            },
+            "test_get_user_api_body": {
                 "id": "2"
             }
         }
