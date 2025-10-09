@@ -4,7 +4,8 @@ def get_test_data(context):
 
     with open(context["testdata"]) as json_file:
         json_data = json.load(json_file)
-        for data in json_data:
-            if data['env'] == context["env"]:
-                return data["data"]
-    return {}
+        env = context.get("env")
+        if env in json_data:
+            return json_data[env]
+        
+    return{}

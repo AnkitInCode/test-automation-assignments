@@ -20,8 +20,6 @@ def global_setup(request, shared_data):
     context = get_env_details(request)
     test_data = get_test_data(context)
 
-    shared_data['headers'] = {"Content-Type": "application/json"}
-
     # store all test_data in shared_daya
     shared_data['test_data'] = test_data
 
@@ -32,7 +30,7 @@ def test_create_user_api_body(global_setup, shared_data):
     url, body = global_setup['apiurl'], shared_data['test_data']['test_create_user_api_body']
 
     try:
-        response = requests.post(url, headers=shared_data['headers'], json=body)
+        response = requests.post(url, headers=global_setup['headers'], json=body)
         response.raise_for_status()
     except Exception as e:
         pytest.fail(f"API request failed: {e}")
@@ -60,7 +58,7 @@ def test_put_update_user_api_body(global_setup, shared_data):
     body, url = shared_data['test_data']['test_put_update_user_api_body'], f"{global_setup['apiurl']}/{id}"
 
     try:
-        response = requests.put(url, headers=shared_data['headers'], json=body)
+        response = requests.put(url, headers=global_setup['headers'], json=body)
         response.raise_for_status()
     except Exception as e:
         pytest.fail(f"API request failed: {e}")
@@ -82,7 +80,7 @@ def test_patch_update_user_api_body(global_setup, shared_data):
     body, url = shared_data['test_data']['test_patch_update_user_api_body'], f"{global_setup['apiurl']}/{id}"
 
     try:
-        response = requests.put(url, headers=shared_data['headers'], json=body)
+        response = requests.put(url, headers=global_setup['headers'], json=body)
         response.raise_for_status()
     except Exception as e:
         pytest.fail(f"API request failed: {e}")
@@ -103,7 +101,7 @@ def test_get_user_api_body(global_setup, shared_data):
     url = f"{global_setup['apiurl']}/{id}"
 
     try:
-        response = requests.get(url, headers=shared_data['headers'])
+        response = requests.get(url, headers=global_setup['headers'])
         response.raise_for_status()
     except Exception as e:
         pytest.fail(f"API request failed: {e}")
@@ -136,7 +134,7 @@ def test_update_non_existent_resource(global_setup, shared_data):
     url, body = f"{global_setup['apiurl']}{non_existent_id}", {"name": "Updated Laptop"}
     
     try:
-        response = requests.patch(url, headers=shared_data['headers'], json=body)
+        response = requests.patch(url, headers=global_setup['headers'], json=body)
         response.raise_for_status()
     except requests.exceptions.HTTPError:
         assert_that(response.status_code).is_equal_to(404)
