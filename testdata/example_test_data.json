@@ -2,8 +2,6 @@
     {
         "env": "QA",
         "data": {
-            "login_page_logo_text": "Swag Labs",
-            "home_page_logo_text": "Swag Labs",
             "test_create_user_api_body": {
                 "name": "Apple MacBook Pro 16",
                 "data": {
@@ -31,8 +29,8 @@
     {
         "env": "STAGING",
         "data": {
-            "login_page_logo_text": "Swag Labs",
-            "home_page_logo_text": "Swag Labs"
+            "login_page_logo_text": "abc",
+            "home_page_logo_text": "xyz"
         }
     }
 ]
