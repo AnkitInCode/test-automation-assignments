@@ -32,3 +32,19 @@ def global_setup(request, shared_data):
     shared_data['test_data'] = test_data
 
     yield context
+
+
+@pytest.mark.regression
+def test_get_user_api(global_setup, shared_data):
+    url = global_setup['apiurl'] + "objects/"
+
+    response = requests.get(url, headers=shared_data['headers'])
+    assert_that(response.status_code).is_equal_to(200)
+
+    # response_data = response.json()
+    # assert_that(response_data["data"]["id"]).is_equal_to(2)
+
+
+@pytest.mark.skip(reason="no way of currently testing this")
+def dummy_test(global_setup, shared_data):
+    logger.info('Hey i am just fooling around!')
