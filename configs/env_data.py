@@ -1,11 +1,14 @@
 envData = {
     'QA': {
-        'baseurl': 'https://www.xyz.com/',
-        'apiurl': 'https://api.restful-api.dev/',
-        'apiToken': 'Bearer sampleToken'
+        'apiurl': 'https://api.restful-api.dev/objects',
+        'apiToken': 'Bearer sampleToken',
+        "username": "qa_user",
+        "password": "qa_pass"
     },
     'STAGING': {
-        'baseurl': 'https://www.xyz.com/',
-        'apiurl': 'https://restful-api.dev/'
+        'apiurl': 'https://restful-api.dev/',
+        'apiToken': 'Bearer sampleToken',
+        "username": "staging_user",
+        "password": "staging_pass"
     }
 }

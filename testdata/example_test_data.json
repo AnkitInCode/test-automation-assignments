@@ -22,6 +22,9 @@
                     "Hard disk size": "1 TB",
                     "color": "silver"
                 }
+            },
+            "test_get_user_api": {
+                "id": "2"
             }
         }
     },

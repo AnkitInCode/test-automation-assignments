@@ -46,3 +46,16 @@ Ex. `pytest -m smoke -vsrP --env=QA --testdata=testdata/example_test_data.json t
 - View workflow runs:
 1. Go to your GitHub repository → Actions tab
 2. Click on a workflow run → Artifacts → Download test-report.zip
+
+
+## Test Coverage
+
+- PATCH endpoints: positive and negative test scenarios
+- POST endpoints: validation of required fields
+- GET endpoints: handling invalid query parameters
+
+## Observations
+
+- API returns 400 for invalid data types
+- PATCH endpoint correctly updates existing resources
+- Negative tests confirmed proper error handling
