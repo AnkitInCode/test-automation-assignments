@@ -7,7 +7,8 @@ envData = {
         'password': 'qa_pass'
     },
     'STAGING': {
-        'apiurl': 'https://restful-api.dev/',
+        'apiurl': 'https://api.restful-api.dev/objects',
+        'headers': {"Content-Type": "application/json"},
         'apiToken': 'Bearer sampleToken',
         'username': 'staging_user',
         'password': 'staging_pass'

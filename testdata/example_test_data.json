@@ -14,7 +14,17 @@
         }
     },
     "STAGING": {
-        "test_create_user_api_body": "abc",
-        "test_get_user_api_body": "xyz"
+       "test_create_user_api_body": {
+            "name": "Samsung Pro 16",
+            "data": {
+                "year": 2024,
+                "price": 2000.99,
+                "CPU model": "Intel Core i12",
+                "Hard disk size": "2.5 TB"
+            }
+        },
+        "test_get_user_api_body": {
+            "id": "7"
+        }
     }
 }

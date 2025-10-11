@@ -152,7 +152,7 @@ def test_invalid_endpoint(global_setup):
     except Exception as e:
         logger.error(f"Request failed: {e}")
     assert_that(response.status_code).is_equal_to(404)
-    logger.info("Verified response status 404 for invalid endpoint ✅")
+    logger.info("Verified response status 404 for invalid endpoint")
 
 
 @pytest.mark.regression
