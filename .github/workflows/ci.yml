@@ -30,7 +30,7 @@ jobs:
       # Step 4: Run Pytest and generate HTML report
       - name: Run tests
         run: |
-          pytest --html=report.html --self-contained-html -vsrP --env=QA --testdata=testdata/example_test_data.json tests/example_rest_api_tests.py
+          pytest --html=reports/report.html --self-contained-html -vsrP --env=QA --testdata=testdata/example_test_data.json tests/example_rest_api_tests.py
 
       # Step 5: Upload report as build artifact
       - name: Upload HTML report

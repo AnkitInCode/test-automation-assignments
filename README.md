@@ -1,5 +1,5 @@
 # test-automation-assignments
-## Python Selenium Automation Framework!
+## API-Test Python Pytest Automation Framework!
 
 ### Features
 - Page Object Model (check pages directory)
