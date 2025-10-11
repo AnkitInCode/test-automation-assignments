@@ -1,0 +1,77 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+
+# Environment files
+*.env
+.env.*
+
+# IDE & Editor files
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Logs and reports
+*.log
+logs/
+report/
+reports/
+output/
+test-output/
+allure-results/
+allure-report/
+
+# Cache & temp files
+.cache/
+*.tmp
+*.bak
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Python test and coverage
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+.pytest_cache/
+nosetests.xml
+coverage.xml
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+*.egg
+.eggs/
+
+# Jupyter notebook checkpoints
+.ipynb_checkpoints
+
+# Configuration overrides
+config_local.json
+config_dev.json
+config_test.json
+
+# Credentials / secrets
+secret.json
+credentials.json
+apikeys.json
+
+# Node (if frontend included)
+node_modules/
+
+# Misc
+*.swp
+*.swo

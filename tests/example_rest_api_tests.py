@@ -55,7 +55,9 @@ def test_put_update_user_api_body(global_setup, shared_data):
     id = shared_data.get('id')
     assert id, "ID not found in shared_data"
 
-    body, url = shared_data['test_data']['test_put_update_user_api_body'], f"{global_setup['apiurl']}/{id}"
+    url = f"{global_setup['apiurl']}/{id}"
+    body = shared_data['test_data']['test_create_user_api_body']
+    body['data']['color'] = "silver"
 
     try:
         response = requests.put(url, headers=global_setup['headers'], json=body)
@@ -77,7 +79,9 @@ def test_patch_update_user_api_body(global_setup, shared_data):
     id = shared_data.get('id')
     assert id, "ID not found in shared_data"
 
-    body, url = shared_data['test_data']['test_patch_update_user_api_body'], f"{global_setup['apiurl']}/{id}"
+    url = f"{global_setup['apiurl']}/{id}"
+    body = shared_data['test_data']['test_create_user_api_body']
+    body['name'] = "Apple MacBook Pro 16 (Updated Name)"
 
     try:
         response = requests.put(url, headers=global_setup['headers'], json=body)
@@ -145,9 +149,9 @@ def test_update_non_existent_resource(global_setup, shared_data):
     pytest.fail(f"Expected 404 but got {response.status_code}")
 
 
-@pytest.mark.skip(reason="no way of currently testing this")
-def dummy_test(global_setup, shared_data):
-    logger.info('Hey i am just fooling around!')
+# @pytest.mark.skip(reason="no way of currently testing this")
+# def dummy_test(global_setup, shared_data):
+#     logger.info('Hey i am just fooling around!')
 
 
 ## Test Coverage

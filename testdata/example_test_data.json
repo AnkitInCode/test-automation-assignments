@@ -9,25 +9,12 @@
                 "Hard disk size": "1 TB"
             }
         },
-        "test_put_update_user_api_body": {
-            "name": "Apple MacBook Pro 16",
-            "data": {
-                "year": 2019,
-                "price": 2049.99,
-                "CPU model": "Intel Core i9",
-                "Hard disk size": "1 TB",
-                "color": "silver"
-            }
-        },
-        "test_patch_update_user_api_body": {
-            "name": "Apple MacBook Pro 16 (Updated Name)"
-        },
         "test_get_user_api_body": {
             "id": "2"
         }
     },
     "STAGING": {
-        "login_page_logo_text": "abc",
-        "home_page_logo_text": "xyz"
+        "test_create_user_api_body": "abc",
+        "test_get_user_api_body": "xyz"
     }
 }
