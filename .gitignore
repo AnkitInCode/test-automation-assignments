@@ -17,7 +17,7 @@ ENV/
 *.log
 *.html
 *.xml
-# reports/
+reports/
 
 # Python test and coverage
 .pytest_cache

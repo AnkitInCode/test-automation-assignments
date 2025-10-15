@@ -1,30 +1,36 @@
 {
-    "QA": {
-        "test_create_user_api_body": {
-            "name": "Apple MacBook Pro 16",
-            "data": {
-                "year": 2019,
-                "price": 1849.99,
-                "CPU model": "Intel Core i9",
-                "Hard disk size": "1 TB"
-            }
-        },
-        "test_get_user_api_body": {
-            "id": "2"
-        }
+  "QA": {
+    "test_create_user_api_body": {
+      "name": "Apple MacBook Pro 16",
+      "data": {
+        "year": 2019,
+        "price": 1849.99,
+        "CPU model": "Intel Core i9",
+        "Hard disk size": "1 TB"
+      }
     },
-    "STAGING": {
-       "test_create_user_api_body": {
-            "name": "Samsung Pro 16",
-            "data": {
-                "year": 2024,
-                "price": 2000.99,
-                "CPU model": "Intel Core i12",
-                "Hard disk size": "2.5 TB"
-            }
-        },
-        "test_get_user_api_body": {
-            "id": "7"
-        }
+    "test_put_update_user_api_body": {
+      "update_data": {
+        "path": "data.color",
+        "value": "silver"
+      }
+    },
+    "test_get_user_api_body": {
+      "id": "2"
     }
+  },
+  "STAGING": {
+    "test_create_user_api_body": {
+      "name": "Samsung Pro 16",
+      "data": {
+        "year": 2024,
+        "price": 2000.99,
+        "CPU model": "Intel Core i12",
+        "Hard disk size": "2.5 TB"
+      }
+    },
+    "test_get_user_api_body": {
+      "id": "7"
+    }
+  }
 }

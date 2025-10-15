@@ -15,9 +15,11 @@ def shared_data():
 
 
 @pytest.fixture(scope="module")
+# def global_setup(request, shared_data, selected_datasets):
 def global_setup(request, shared_data):
     '''context will contain all env variables & env specific data stored in configs/env_data'''
     context = get_env_details(request)
+    # test_data = get_test_data(context, selected_datasets)
     test_data = get_test_data(context)
 
     # store all test_data in shared_daya
@@ -63,7 +65,13 @@ def test_put_update_user_api_body(global_setup, shared_data):
 
     url = f"{global_setup['apiurl']}/{id}"
     body = shared_data['test_data']['test_create_user_api_body']
-    body['data']['color'] = "silver"
+    path = shared_data['test_data']['test_put_update_user_api_body']['update_data']['path']
+
+    nested_levels = ''
+    for level in path.split('.'):
+        nested_levels += f"['{level}']"
+
+    exec(f"body{nested_levels} = shared_data['test_data']['test_put_update_user_api_body']['update_data']['value']")
 
     try:
         response = requests.put(url, headers=global_setup['headers'], json=body)
