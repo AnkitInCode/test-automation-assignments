@@ -13,7 +13,6 @@ def shared_data():
     data = {}
     yield data
 
-
 @pytest.fixture(scope="module")
 def global_setup(request, shared_data):
     '''context will contain all env variables & env specific data stored in configs/env_data'''
@@ -30,7 +29,7 @@ def test_create_user_api_body(global_setup, shared_data):
     assert result is True
 
 
-@pytest.mark.regression
+@pytest.mark.smoke
 def test_put_update_user_api_body(global_setup, shared_data):
     result = ManageUser().update_user(global_setup, shared_data)
     assert result is True
@@ -38,110 +37,29 @@ def test_put_update_user_api_body(global_setup, shared_data):
 
 @pytest.mark.smoke
 def test_patch_update_user_api_body(global_setup, shared_data):
-    logger.info("Test Started: Patch Update User API")
-    id = shared_data.get('id')
-    assert id, "ID not found in shared_data"
+    result = ManageUser().edit_user(global_setup, shared_data)
+    assert result is True
 
-    url = f"{global_setup['apiurl']}/{id}"
-    body = shared_data['test_data']['test_create_user_api_body']
-    body['name'] = "Apple MacBook Pro 16 (Updated Name)"
 
-    try:
-        response = requests.put(url, headers=global_setup['headers'], json=body)
-        response.raise_for_status()
-        logger.info(f"PATCH request successful | Status: {response.status_code}")
-    except Exception as e:
-        logger.error(f"API request failed: {e}")
-
-    try:
-        data = response.json()
-    except ValueError:
-        logger.error("Invalid JSON in API response: {response.text}")
-
-    assert_that(response.status_code).is_equal_to(200)
-    assert_that(data["id"]).is_equal_to(id)
-    assert_that(data["name"]).is_equal_to(body["name"])
-
-    logger.info(f"User {id} name updated successfully to: {data['name']}")
-
-@pytest.mark.regression
+@pytest.mark.smoke
 def test_get_user_api_body(global_setup, shared_data):
-    logger.info("Test Started: Get User API")
+    result = ManageUser().get_user(global_setup, shared_data)
+    assert result is True
 
-    body = shared_data['test_data']['test_get_user_api_body']
-    id = body.get('id')
-    url = f"{global_setup['apiurl']}/{id}"
-
-    try:
-        response = requests.get(url, headers=global_setup['headers'])
-        response.raise_for_status()
-        logger.info(f"GET request successful | Status: {response.status_code}")
-    except Exception as e:
-        logger.error(f"API request failed: {e}")
-
-    try:
-        data = response.json()
-    except ValueError:
-        logger.error("Invalid JSON in API response: {response.text}")
-
-    assert_that(response.status_code).is_equal_to(200)
-    assert_that(data).contains_key("id")
-    assert_that(str(data["id"])).is_equal_to(id)
-
-    logger.info(f"User data retrieved successfully for ID: {id}")
 
 
 # #------------------ Negative Cases---
 
 @pytest.mark.regression
-def test_invalid_endpoint(global_setup):
-    logger.info("Test Started: Invalid Endpoint API")
-
-    url = global_setup['apiurl'] + "invalid_endpoint"
-    try:
-        response = requests.get(url)
-        logger.info(f"Request sent to invalid endpoint | Status: {response.status_code}")
-    except Exception as e:
-        logger.error(f"Request failed: {e}")
-    assert_that(response.status_code).is_equal_to(404)
-    logger.info("Verified response status 404 for invalid endpoint")
-
+def test_invalid_endpoint(global_setup, shared_data):
+    result = ManageUser().invalid_endpoint(global_setup, shared_data)
+    assert result is True
 
 @pytest.mark.regression
-def test_update_non_existent_resource(global_setup, shared_data):
-    logger.info("Test Started: Update Non-Existent Resource API")
-
-    non_existent_id = 9999
-    url, body = f"{global_setup['apiurl']}{non_existent_id}", {"name": "Updated Laptop"}
-    
-    try:
-        logger.info(f"Attempting to PATCH non-existent resource with ID: {non_existent_id}")
-        response = requests.patch(url, headers=global_setup['headers'], json=body)
-        response.raise_for_status()
-    except requests.exceptions.HTTPError:
-        logger.info(f"Received expected 404 for non-existent resource ID: {non_existent_id}")
-        assert_that(response.status_code).is_equal_to(404)
-        return
-    except Exception as e:
-        logger.error(f"API request failed: {e}")
-
-    logger.error(f"Expected 404 but got {response.status_code}")
-
+def test_patch_non_existent_resource(global_setup, shared_data):
+    result = ManageUser().edit_non_existent_resource(global_setup, shared_data)
+    assert result is True
 
 @pytest.mark.skip(reason="no way of currently testing this")
-def dummy_test(global_setup, shared_data):
+def dummy_test():
     logger.info('Hey i am just fooling around!')
-
-"""
-# Test Coverage
-
-- PATCH endpoints: positive and negative test scenarios
-- POST endpoints: validation of required fields
-- GET endpoints: handling invalid query parameters
-
-# Observations
-
-- API returns 400 for invalid data types
-- PATCH endpoint correctly updates existing resources
-- Negative tests confirmed proper error handling
-"""

@@ -7,18 +7,39 @@
         "price": 1849.99,
         "CPU model": "Intel Core i9",
         "Hard disk size": "1 TB"
-      }
+      },
+      "expected_status_code": 200
     },
     "test_put_update_user_api_body": {
       "update_data": {
         "path": "data.color",
         "value": "silver"
-      }
+      },
+      "expected_status_code": 200
+    },
+    "test_patch_update_user_api_body": {
+      "name": "Apple MacBook Pro 16 (Updated Name)",
+      "body": {},
+      "expected_status_code": 200
     },
     "test_get_user_api_body": {
-      "id": "2"
+      "id": "2",
+      "body": {},
+      "expected_status_code": 200
+    },
+    "test_invalid_endpoint": {
+      "endpoint": "/users/invalid",
+      "body": {},
+      "expected_status_code": 404
+    },
+    "test_patch_non_existent_resource": {
+      "non_existent_id": 999,
+      "name": "Updated Laptop",
+      "body": {},
+      "expected_status_code": 404
     }
   },
+
   "STAGING": {
     "test_create_user_api_body": {
       "name": "Samsung Pro 16",
