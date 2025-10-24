@@ -16,12 +16,10 @@ class ManageUser:
             try:
                 response = requests.post(url, headers=global_setup['headers'], json=body)
                 response.raise_for_status()
+                data = response.json()
                 logger.info(f"Request successful | Status: {response.status_code}")
             except Exception as e:
                 logger.error(f"API request failed: {e}")
-
-            try:
-                data = response.json()
             except ValueError:
                 logger.error("Invalid JSON in API response: {response.text}")
 
@@ -60,13 +58,10 @@ class ManageUser:
             try:
                 response = requests.put(url, headers=global_setup['headers'], json=body)
                 response.raise_for_status()
+                data = response.json()
                 logger.info(f"PUT request successful | Status: {response.status_code}")
-                # breakpoint()
             except Exception as e:
                 logger.error(f"API request failed: {e}")
-
-            try:
-                data = response.json()
             except ValueError:
                 logger.error("Invalid JSON in API response: {response.text}")
 
@@ -80,7 +75,6 @@ class ManageUser:
             logger.error(f"Update User API failed: {e}")
             return False
 
-
     def edit_user(self, global_setup, shared_data):
         logger.info("Test Started: Patch Update User API")
         ManageUser().create_user(global_setup, shared_data)
@@ -93,14 +87,12 @@ class ManageUser:
 
         try:
             try:
-                response = requests.put(url, headers=global_setup['headers'], json=body)
+                response = requests.patch(url, headers=global_setup['headers'], json=body)
                 response.raise_for_status()
+                data = response.json()
                 logger.info(f"PATCH request successful | Status: {response.status_code}")
             except Exception as e:
                 logger.error(f"API request failed: {e}")
-
-            try:
-                data = response.json()
             except ValueError:
                 logger.error("Invalid JSON in API response: {response.text}")
 
@@ -125,12 +117,11 @@ class ManageUser:
             try:
                 response = requests.get(url, headers=global_setup['headers'])
                 response.raise_for_status()
+                data = response.json()
                 logger.info(f"GET request successful | Status: {response.status_code}")
             except Exception as e:
                 logger.error(f"API request failed: {e}")
 
-            try:
-                data = response.json()
             except ValueError:
                 logger.error("Invalid JSON in API response: {response.text}")
 

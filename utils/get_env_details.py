@@ -10,5 +10,4 @@ def get_env_details(request):
         'headers': envData[request.config.getoption("--env")]['headers'],
     }
 
-    # print(f"[INFO] Loaded environment configuration for: {env}")
     return env_vars

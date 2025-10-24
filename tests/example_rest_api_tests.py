@@ -1,4 +1,4 @@
-import pytest, requests, logging
+import pytest, logging
 from assertpy import assert_that
 from tests.modules.manage_user import ManageUser
 from utils.get_env_details import get_env_details
@@ -28,38 +28,29 @@ def test_create_user_api_body(global_setup, shared_data):
     result = ManageUser().create_user(global_setup, shared_data)
     assert result is True
 
-
 @pytest.mark.smoke
 def test_put_update_user_api_body(global_setup, shared_data):
     result = ManageUser().update_user(global_setup, shared_data)
     assert result is True
-
 
 @pytest.mark.smoke
 def test_patch_update_user_api_body(global_setup, shared_data):
     result = ManageUser().edit_user(global_setup, shared_data)
     assert result is True
 
-
 @pytest.mark.smoke
 def test_get_user_api_body(global_setup, shared_data):
     result = ManageUser().get_user(global_setup, shared_data)
     assert result is True
 
-
-
-# #------------------ Negative Cases---
-
+@pytest.mark.negative_test
 @pytest.mark.regression
 def test_invalid_endpoint(global_setup, shared_data):
     result = ManageUser().invalid_endpoint(global_setup, shared_data)
     assert result is True
 
+@pytest.mark.negative_test
 @pytest.mark.regression
 def test_patch_non_existent_resource(global_setup, shared_data):
     result = ManageUser().edit_non_existent_resource(global_setup, shared_data)
     assert result is True
-
-@pytest.mark.skip(reason="no way of currently testing this")
-def dummy_test():
-    logger.info('Hey i am just fooling around!')
