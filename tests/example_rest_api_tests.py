@@ -1,11 +1,11 @@
-import requests, pytest, logging
-from utils.get_env_details import get_env_details
+import pytest, requests, logging
 from assertpy import assert_that
+from tests.modules.manage_user import ManageUser
+from utils.get_env_details import get_env_details
 from utils.get_test_data import get_test_data
 
 logging.getLogger().setLevel(logging.INFO)
 logger = logging.getLogger(__name__)
-
 
 @pytest.fixture(scope="module")
 def shared_data():
@@ -15,81 +15,25 @@ def shared_data():
 
 
 @pytest.fixture(scope="module")
-# def global_setup(request, shared_data, selected_datasets):
 def global_setup(request, shared_data):
     '''context will contain all env variables & env specific data stored in configs/env_data'''
     context = get_env_details(request)
-    # test_data = get_test_data(context, selected_datasets)
     test_data = get_test_data(context)
 
     # store all test_data in shared_daya
     shared_data['test_data'] = test_data
-
     yield context
 
-
-def test_create_user_api_body(global_setup, shared_data):
-    url, body = global_setup['apiurl'], shared_data['test_data']['test_create_user_api_body']
-
-    logger.info("Test Started: Create User API")
-
-    try:
-        response = requests.post(url, headers=global_setup['headers'], json=body)
-        response.raise_for_status()
-        logger.info(f"Request successful | Status: {response.status_code}")
-    except Exception as e:
-        logger.error(f"API request failed: {e}")
-
-    try:
-        data = response.json()
-    except ValueError:
-        logger.error("Invalid JSON in API response: {response.text}")
-
-    # Key validations
-    assert_that(response.status_code).is_equal_to(200)
-    assert_that(data).contains_key("id", "name", "data")
-    assert_that(data["name"]).is_equal_to(body["name"])
-    assert_that(data["data"]["CPU model"]).is_equal_to(body["data"]["CPU model"])
-    assert_that(data["data"]["price"]).is_greater_than(0)
-
-    shared_data['id'] = data["id"]
-    logger.info(f"User created successfully with ID: {shared_data['id']}")
-
-
 @pytest.mark.smoke
+def test_create_user_api_body(global_setup, shared_data):
+    result = ManageUser().create_user(global_setup, shared_data)
+    assert result is True
+
+
+@pytest.mark.regression
 def test_put_update_user_api_body(global_setup, shared_data):
-    logger.info("Test Started: Update User API")
-
-    id = shared_data.get('id')
-    assert id, "ID not found in shared_data"
-
-    url = f"{global_setup['apiurl']}/{id}"
-    body = shared_data['test_data']['test_create_user_api_body']
-    path = shared_data['test_data']['test_put_update_user_api_body']['update_data']['path']
-
-    nested_levels = ''
-    for level in path.split('.'):
-        nested_levels += f"['{level}']"
-
-    exec(f"body{nested_levels} = shared_data['test_data']['test_put_update_user_api_body']['update_data']['value']")
-
-    try:
-        response = requests.put(url, headers=global_setup['headers'], json=body)
-        response.raise_for_status()
-        logger.info(f"PUT request successful | Status: {response.status_code}")
-    except Exception as e:
-        logger.error(f"API request failed: {e}")
-
-    try:
-        data = response.json()
-    except ValueError:
-        logger.error("Invalid JSON in API response: {response.text}")
-
-    assert_that(response.status_code).is_equal_to(200)
-    assert_that(data["id"]).is_equal_to(id)
-    assert_that(data["data"]["color"]).is_equal_to(body["data"]['color'])
-
-    logger.info(f"User {id} updated successfully with color: {data['data']['color']}")
+    result = ManageUser().update_user(global_setup, shared_data)
+    assert result is True
 
 
 @pytest.mark.smoke
@@ -188,15 +132,16 @@ def test_update_non_existent_resource(global_setup, shared_data):
 def dummy_test(global_setup, shared_data):
     logger.info('Hey i am just fooling around!')
 
+"""
+# Test Coverage
 
-## Test Coverage
+- PATCH endpoints: positive and negative test scenarios
+- POST endpoints: validation of required fields
+- GET endpoints: handling invalid query parameters
 
-# - PATCH endpoints: positive and negative test scenarios
-# - POST endpoints: validation of required fields
-# - GET endpoints: handling invalid query parameters
+# Observations
 
-## Observations
-
-# - API returns 400 for invalid data types
-# - PATCH endpoint correctly updates existing resources
-# - Negative tests confirmed proper error handling
+- API returns 400 for invalid data types
+- PATCH endpoint correctly updates existing resources
+- Negative tests confirmed proper error handling
+"""
